@@ -5,10 +5,11 @@ import cv2
 import matplotlib.pyplot as plt
 import numpy as np
 
-# Load the images with a gray scale
+# Load the images and convert images to the single channel grayscale images
 img1 = cv2.imread("./images/homo_deus/1.jpg", cv2.IMREAD_GRAYSCALE)
 img2 = cv2.imread("./images/homo_deus/7.jpg", cv2.IMREAD_GRAYSCALE)
 
+# downscale and blur if necessary
 #img1 = cv2.pyrDown(img1)
 img2 = cv2.pyrDown(img2)
 
@@ -18,12 +19,12 @@ img2 = cv2.pyrDown(img2)
 img1_blur = cv2.GaussianBlur(img1, (0,0), 0.1)
 img2_blur = cv2.GaussianBlur(img2, (0,0), 1.2)
 
-# Other Feature Detectors
+# Other possible Feature Detectors/Describtors
 #sift = cv2.SIFT_create()
 #surf = cv2.xfeatures2d.SURF_create()
 #orb = cv2.ORB_create(nfeatures=3000)
 
-# Initiate FAST detector, which was selected in the paper
+# Initiate FAST detector, which was selected in the paper (from CenSurE)
 star = cv2.FastFeatureDetector_create() 
 # Initiate BRIEF extractor
 brief = cv2.xfeatures2d.BriefDescriptorExtractor_create(bytes=64,use_orientation = True)
