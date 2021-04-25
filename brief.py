@@ -6,14 +6,17 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # Load the images with a gray scale
-img1 = cv2.imread("./images/pisa/1.jpg", cv2.IMREAD_GRAYSCALE)
-img2 = cv2.imread("./images/pisa/2.jpg", cv2.IMREAD_GRAYSCALE)
+img1 = cv2.imread("./images/homo_deus/1.jpg", cv2.IMREAD_GRAYSCALE)
+img2 = cv2.imread("./images/homo_deus/7.jpg", cv2.IMREAD_GRAYSCALE)
+
+#img1 = cv2.pyrDown(img1)
+img2 = cv2.pyrDown(img2)
 
 #img2 = cv2.flip(img2, 1)
 
 # Add a gaussian blur
-img1_blur = cv2.GaussianBlur(img1, (5,5), 0)
-img2_blur = cv2.GaussianBlur(img2, (5,5), 0)
+img1_blur = cv2.GaussianBlur(img1, (0,0), 0.1)
+img2_blur = cv2.GaussianBlur(img2, (0,0), 1.2)
 
 # Other Feature Detectors
 #sift = cv2.SIFT_create()
@@ -23,7 +26,7 @@ img2_blur = cv2.GaussianBlur(img2, (5,5), 0)
 # Initiate FAST detector, which was selected in the paper
 star = cv2.FastFeatureDetector_create() 
 # Initiate BRIEF extractor
-brief = cv2.xfeatures2d.BriefDescriptorExtractor_create()
+brief = cv2.xfeatures2d.BriefDescriptorExtractor_create(bytes=64,use_orientation = True)
 
 # find the keypoints with STAR (from CenSurE)
 kp_img1 = star.detect(img1_blur,None)
@@ -53,7 +56,7 @@ plots[1].set_title("Second image blurred with keypoints")
 plots[1].imshow(img2_with_kp2)
 
 # Draw the keypoints from img1_blur and img2_blur and also draw the n best results
-n = 20
+n = 100
 matching_result = cv2.drawMatches(img1_blur, kp1, img2_blur, kp2, matches[:n], None)
 
 # Display Matches
